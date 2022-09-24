@@ -21,19 +21,26 @@ const fs=require("fs");
 
 let homeCxt="";
 let projectCxt="";
-
-fs.readFile("projectZZ.html",(err,project)=>{
+let regCxt="";
+fs.readFile("home.html",(err,home)=>{
     if(err){
         throw err;
     }
-    homeCxt=project;
+    homeCxt=home;
+});
+
+fs.readFile("project.html",(err,project)=>{
+    if(err){
+        throw err;
+    }
+    projectCxt=project;
 });
 
 fs.readFile("registration.html",(err,registration)=>{
     if(err){
         throw err;
     }
-    projectCxt=registration;
+    regCxt=registration;
 });
 
 http
@@ -42,11 +49,15 @@ http
     response.writeHeader(200,{"Content-Type":"text/html"});
     switch(url){
         case "/project":
-            response.write(homeCxt);
+            response.write(projectCxt);
+            response.end();
+            break;
+        case "/registration":
+            response.write(regCxt);
             response.end();
             break;
         default:
-             response.write(projectCxt);
+             response.write(homeCxt);
              response.end();
              break;
     }
